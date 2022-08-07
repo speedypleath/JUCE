@@ -201,7 +201,7 @@ public:
     int getNoteAtPosition (Point<float> p)  { return getNoteAndVelocityAtPosition (p).note; }
    #endif
 
-    /** Returns the rectangle for a given key. */
+        virtual /** Returns the rectangle for a given key. */
     Rectangle<float> getRectangleForKey (int midiNoteNumber) const;
 
     //==============================================================================
@@ -265,31 +265,34 @@ public:
     /** @internal */
     void mouseWheelMove (const MouseEvent&, const MouseWheelDetails&) override;
 
-private:
+        void setLowestVisibleKeyFloat (float noteNumber);
+
+    private:
     //==============================================================================
     struct UpDownButton;
 
     Range<float> getKeyPos (int midiNoteNumber) const;
     NoteAndVelocity remappedXYToNote (Point<float>) const;
-    void setLowestVisibleKeyFloat (float noteNumber);
 
-    //==============================================================================
+        //==============================================================================
     Orientation orientation;
 
     float blackNoteLengthRatio = 0.7f, blackNoteWidthRatio = 0.7f;
-    float xOffset = 0.0f;
-    float keyWidth = 16.0f;
-    float firstKey = 12 * 4.0f;
 
-    int scrollButtonWidth = 12;
-    int rangeStart = 0, rangeEnd = 127;
-    int octaveNumForMiddleC = 3;
+        int scrollButtonWidth = 12;
+        int octaveNumForMiddleC = 3;
 
     bool canScroll = true;
     std::unique_ptr<Button> scrollDown, scrollUp;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyboardComponentBase)
-};
+    protected:
+        float xOffset = 0.0f;
+        float keyWidth = 16.0f;
+        int rangeStart = 0;
+        int rangeEnd = 127;
+        float firstKey = 12 * 4.0f;
+    };
 
 } // namespace juce
